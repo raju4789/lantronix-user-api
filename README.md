@@ -7,26 +7,26 @@
 
 ____POST____  http://localhost:7777/user/register
 
-Content-Type: application/json
+____Content-Type____: application/json
 
 {
+   
+    "username": "raju4789",
 
-  "username": "raju4789",
+    "password":"mln1234",
 
-  "password":"mln1234",
+    "email":"narasimha4789@gmail.com",
 
-  "email":"narasimha4789@gmail.com",
+    "firstname": "Raju",
 
-  "firstname": "Raju",
-
-  "lastname": "MLN"
-
+    "lastname": "MLN"
+  
 }
 
 ### Response :
 
-{ 
-    
+{
+
     "message": "A verification mail has been sent to your registered mail." 
     
 }
@@ -37,25 +37,23 @@ Content-Type: application/json
 
 ____POST____  http://localhost:7777/user/login
 
-Content-Type: application/json
+____Content-Type:____ application/json
 
 {
 
+    "username": "raju4789",
 
-  "username": "raju4789",
-
-  "password":"mln1234"
+    "password":"mln1234"
   
-
 }
 
 ### Response :
 
 {
 
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhanU0Nzg5IiwicGFzc3dvcmQiOiJtbG4xMjM0IiwiaWF0IjoxNjAyNDExNjQzLCJleHAiOjE2MDI0MTIyNDN9.NME0yYeuk3dvAsYXtLY9CIbBsXW2OCMk7hKT7wx3b30",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhanU0Nzg5IiwicGFzc3dvcmQiOiJtbG4xMjM0IiwiaWF0IjoxNjAyNDExNjQzLCJleHAiOjE2MDI0MTIyNDN9.NME0yYeuk3dvAsYXtLY9CIbBsXW2OCMk7hKT7wx3b30",
 
-  "user": {
+    "user": {
 
     "_id": "5f81b168fec67a5997e009de",
 
@@ -67,7 +65,7 @@ Content-Type: application/json
 
     "lastname": "MLN"
 
-  }
+    }
 
 }
 
@@ -83,7 +81,7 @@ ____Authorization:____ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ
 
 {
 
-  "message": "live long and prosper"
+    "message": "live long and prosper"
 
 }
 
