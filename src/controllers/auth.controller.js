@@ -34,6 +34,7 @@ const loginUser = async (req, res, next) => {
         logger.error(`Failed to login because of error: ${err.message}`);
         next(err);
     }
-}
+};
 
 module.exports = { getStatus, registerUser, loginUser };
+

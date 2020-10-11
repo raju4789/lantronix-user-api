@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const { validate } = require('express-validation');
 
 const { authoriseRequest } = require('../services/auth.service');
@@ -8,6 +7,7 @@ const { getStatus, registerUser, loginUser } = require('../controllers/auth.cont
 
 const { REGISTER, LOGIN } = require('../utils/validations');
 
+const router = express.Router();
 
 /**
  * Route to handle user login
