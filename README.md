@@ -5,7 +5,7 @@
 
 ### Request :
 
-____POST____  /user/register
+____POST____    /user/register
 
 ____Content-Type____: application/json
 
@@ -35,7 +35,7 @@ ____Content-Type____: application/json
 
 ### Request :
 
-____POST____  /user/login
+____POST____    /user/login
 
 ____Content-Type:____ application/json
 
@@ -73,7 +73,7 @@ ____Content-Type:____ application/json
 
 ### Request  :
 
-____GET____  /user/status
+____GET____    /user/status
 
 ____Authorization:____ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhanUiLCJwYXNzd29yZCI6Im1sbjEyMzQiLCJpYXQiOjE2MDIzMzA0OTQsImV4cCI6MTYwMjMzMDU1NH0.mJZtkyCivB_RvxVZKSF0DOKE7VlvBhA0uSIPMtqflPg
 
