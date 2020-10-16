@@ -8,7 +8,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const errorHandler = require('./utils/errorHandler');
+const errorHandler = require('./middlewares/error.middleware');
 
 const logger = require('./config/logger.config');
 

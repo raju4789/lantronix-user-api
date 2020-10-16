@@ -1,37 +1,14 @@
-const jwt = require('jsonwebtoken');
 const md5 = require('md5');
+const jwt = require("jsonwebtoken");
 
 const NotFoundError = require('../errors/NotFoundError');
-const UnAuthorisedUserError = require('../errors/UnAuthorisedUserError');
 
-const { getUserByUserName } = require('./user.service');
+const userRepo = require('../repos/user.repo');
 
 const logger = require('../config/logger.config');
 
-/**
- * authorises user request
- *  @param request
- *  @param next
- */
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET || "secret";
 
-const authoriseRequest = (req, _, next) => {
-    logger.info('authoriseRequest middleware called');
-
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) {
-        logger.error('Invalid request: Token is empty');
-        throw new UnAuthorisedUserError('Token is empty');
-    }
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
-        if (err) {
-            logger.error(`Failed to verify token because of error :${err.message}`);
-            throw new UnAuthorisedUserError(err.message);
-        }
-        next();
-    });
-};
 
 /**
  * authenticates user login credentials
@@ -42,7 +19,7 @@ const authoriseRequest = (req, _, next) => {
 const authenticateUser = async (user) => {
     logger.info('authenticateUser called');
 
-    const dbUser = await getUserByUserName(user.username);
+    const dbUser = await userRepo.getDBUser(user.username);
     if (!dbUser) {
         throw new NotFoundError('Username/Password is incorrect');
     }
@@ -52,6 +29,10 @@ const authenticateUser = async (user) => {
     }
 
     const accessToken = generateAccessToken(user);
+
+    if (!accessToken) {
+        throw new Error("Failed to generate access token");
+    }
 
     delete dbUser.password;
 
@@ -69,7 +50,7 @@ const authenticateUser = async (user) => {
  *  @returns user along with access token
  */
 const generateAccessToken =
-    (user) => jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+    (user) => jwt.sign(user, ACCESS_TOKEN, { expiresIn: '10m' });
 
-module.exports = { authoriseRequest, authenticateUser };
+module.exports = { authenticateUser };
 

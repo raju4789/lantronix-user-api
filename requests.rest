@@ -23,6 +23,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:7777/user/status
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhanUiLCJwYXNzd29yZCI6Im1sbjEyMzQiLCJpYXQiOjE2MDIzMzA0OTQsImV4cCI6MTYwMjMzMDU1NH0.mJZtkyCivB_RvxVZKSF0DOKE7VlvBhA0uSIPMtqflPg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhanU0Nzg5IiwicGFzc3dvcmQiOiJtbG4xMjM0IiwiaWF0IjoxNjAyODUzMzM3LCJleHAiOjE2MDI4NTM5Mzd9.MScoHCf1EhuOXpaOFAraTPJu9ZPq_Q1BP-X_t26IffA
+
 
 

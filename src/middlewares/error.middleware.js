@@ -1,6 +1,7 @@
 const UserAlreadyExistsError = require('../errors/UserAlreadyExistsError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnAuthorisedUserError = require('../errors/UnAuthorisedUserError');
+const DBConnectionError = require('../errors/DBConnectionError');
 
 const { ValidationError } = require('express-validation');
 
@@ -20,7 +21,7 @@ const errorHandler = (err, req, res, next) => {
     let ERR_MSG = err.message;
 
     if (err instanceof ValidationError) {
-        STATUS_CODE = 500;
+        STATUS_CODE = 400;
         ERR_MSG = err.message;
     } else if (err instanceof UserAlreadyExistsError) {
         STATUS_CODE = 400;
@@ -30,6 +31,9 @@ const errorHandler = (err, req, res, next) => {
         ERR_MSG = err.message;
     } else if (err instanceof UnAuthorisedUserError) {
         STATUS_CODE = 403;
+        ERR_MSG = err.message;
+    } else if (err instanceof DBConnectionError) {
+        STATUS_CODE = 500;
         ERR_MSG = err.message;
     }
 

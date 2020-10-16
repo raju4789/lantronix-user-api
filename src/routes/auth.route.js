@@ -1,9 +1,9 @@
 const express = require('express');
 const { validate } = require('express-validation');
 
-const { authoriseRequest } = require('../services/auth.service');
-
-const { getStatus, registerUser, loginUser } = require('../controllers/auth.controller');
+const authoriseRequest = require('../middlewares/auth.middleware');
+const dbConnectionCheck = require('../middlewares/connection.middleware');
+const authController = require('../controllers/auth.controller');
 
 const { REGISTER, LOGIN } = require('../utils/validations');
 
@@ -15,7 +15,7 @@ const router = express.Router();
  *  @returns user authorisation status
  */
 router.route('/status')
-    .get(authoriseRequest, getStatus);
+    .get(authoriseRequest, authController.getStatus);
 
 /**
  * Route to handle user registration
@@ -24,7 +24,7 @@ router.route('/status')
  */
 
 router.route('/register')
-    .post(validate(REGISTER, {}, {}), registerUser);
+    .post(validate(REGISTER, {}, {}), dbConnectionCheck, authController.registerUser);
 
 /**
  * Route to handle user login
@@ -32,7 +32,7 @@ router.route('/register')
  *  @returns login status
  */
 router.route('/login')
-    .post(validate(LOGIN, {}, {}), loginUser);
+    .post(validate(LOGIN, {}, {}), dbConnectionCheck, authController.loginUser);
 
 
 module.exports = router;
