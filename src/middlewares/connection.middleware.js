@@ -26,3 +26,4 @@ const dbConnectionCheck = (req, _, next) => {
 };
 
 module.exports = dbConnectionCheck;
+

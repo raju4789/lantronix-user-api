@@ -53,20 +53,20 @@ describe('user service', function () {
         userService.__set__("logger", logger);
     });
 
-    describe("create user", function () {
+    describe("create user", () => {
 
-        it("should throw an error, if user already exists", function () {
+        it("should throw an error, if user already exists", () => {
             userRepo.getDBUser.resolves(getDBUserResponse.USER_EXISTS);
             return userService.createUser({ username: 'raju4789' }).should.be.rejectedWith(Error, `User already exists with username: raju4789`);
         });
 
-        it("should throw an error, if addUser call fails", function () {
+        it("should throw an error, if addUser call fails", () => {
             userRepo.getDBUser.resolves(getDBUserResponse.NO_USER_EXISTS);
             userRepo.addUser.rejects();
             return userService.createUser({ username: 'raju4789' }).should.be.rejectedWith(Error);
         });
 
-        it("should return added user is operation is successfull", async function () {
+        it("should return added user is operation is successfull", async () => {
             userRepo.getDBUser.resolves(getDBUserResponse.NO_USER_EXISTS);
             userRepo.addUser.resolves(addUserResponse.SUCCESS);
             const user = await userService.createUser({

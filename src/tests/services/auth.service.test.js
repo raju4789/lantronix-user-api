@@ -53,7 +53,7 @@ describe('user service', function () {
             return authService.authenticateUser({ username: 'raju4789', password: 'mln12345' }).should.be.rejectedWith(Error, `Username/Password is incorrect`);
         });
 
-        it("should return access token along with user", async function () {
+        it("should return access token along with user", async () => {
             userRepo.getDBUser.resolves(getDBUserResponse.USER_EXISTS);
 
             const response = await authService.authenticateUser({
