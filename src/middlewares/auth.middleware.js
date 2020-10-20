@@ -2,11 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const logger = require('../config/logger.config');
 
-const UnAuthorisedUserError = require('../errors/UnAuthorisedUserError');
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
 
 /**
  * authorises user request
- *  @param request
+ *  @param req
  *  @param next
  */
 
@@ -17,13 +18,17 @@ const authoriseRequest = (req, _, next) => {
     const token = authHeader && authHeader.split(' ')[1];
     if (token === null) {
         logger.error('Invalid request: Token is empty');
-        throw new UnAuthorisedUserError('Token is empty');
+        const error = new errorModel.errorResponse(
+            errors.invalid_key.withDetails('Token is empty'));
+        next(error);
     }
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
         if (err) {
             logger.error(`Failed to verify token because of error :${err.message}`);
-            throw new UnAuthorisedUserError(err.message);
+            const error = new errorModel.errorResponse(
+                errors.invalid_key.withDetails(err.message));
+            next(error);
         }
         next();
     });

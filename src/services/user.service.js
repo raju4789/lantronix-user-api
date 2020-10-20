@@ -2,9 +2,10 @@ const md5 = require('md5');
 
 const logger = require('../config/logger.config');
 
-const UserAlreadyExistsError = require('../errors/UserAlreadyExistsError');
-
 const userRepo = require('../repos/user.repo');
+
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
 
 const getUserByUserName = async (username) => {
     return await userRepo.getDBUser(username);
@@ -26,8 +27,10 @@ const createUser = async (user) => {
 
     if (dbUser) {
         logger.error(`User already exists for username : ${username}`);
-
-        throw new UserAlreadyExistsError(`User already exists with username: ${username}`);
+        const error =
+            new errorModel.errorResponse(
+                errors.invalid_input.withDetails(`User with username : ${username} is already created`));
+        throw error;
     }
 
     password = md5(password);

@@ -1,7 +1,10 @@
 const { MongoClient } = require('mongodb');
-const DBConnectionError = require('../errors/DBConnectionError');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 
-const URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/users';
+//const URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/users';
+
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
 
 let db = null;
 
@@ -12,12 +15,15 @@ let db = null;
 const connectToDB = async () => {
     try {
         if (db) return db;
-        const client = await MongoClient.connect(URL, { useNewUrlParser: true });
+        let url = await new MongoMemoryServer().getUri();
+        const client = await MongoClient.connect(url, { useNewUrlParser: true });
         db = client.db();
         return db;
-    }
-    catch (err) {
-        throw new DBConnectionError("DB Connection failed");
+    } catch (err) {
+
+        const error = new errorModel.errorResponse(
+            errors.internal_error.withDetails('Our experts are looking into it.'));
+        throw error;
     }
 
 };

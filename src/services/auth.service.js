@@ -1,13 +1,14 @@
 const md5 = require('md5');
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const NotFoundError = require('../errors/NotFoundError');
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
 
 const userRepo = require('../repos/user.repo');
 
 const logger = require('../config/logger.config');
 
-const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET || "secret";
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET || 'secret';
 
 
 /**
@@ -20,18 +21,27 @@ const authenticateUser = async (user) => {
     logger.info('authenticateUser called');
 
     const dbUser = await userRepo.getDBUser(user.username);
+
+    let error =
+        new errorModel.errorResponse(errors.not_found.withDetails('Username/Password is incorrect'));
+
     if (!dbUser) {
-        throw new NotFoundError('Username/Password is incorrect');
+        throw error;
     }
 
     if (dbUser.password !== md5(user.password)) {
-        throw new NotFoundError('Username/Password is incorrect');
+        throw error;
     }
 
-    const accessToken = generateAccessToken(user);
-
-    if (!accessToken) {
-        throw new Error("Failed to generate access token");
+    let accessToken = null;
+    try {
+        accessToken = generateAccessToken(user);
+        if (!accessToken) {
+            throw new Error();
+        }
+    } catch (_) {
+        const err = new errorModel.errorResponse(errors.could_not_get_access_token.withDetails(''));
+        throw err;
     }
 
     delete dbUser.password;

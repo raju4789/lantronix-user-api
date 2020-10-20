@@ -1,11 +1,7 @@
-const UserAlreadyExistsError = require('../errors/UserAlreadyExistsError');
-const NotFoundError = require('../errors/NotFoundError');
-const UnAuthorisedUserError = require('../errors/UnAuthorisedUserError');
-const DBConnectionError = require('../errors/DBConnectionError');
-
 const { ValidationError } = require('express-validation');
 
-const logger = require('../config/logger.config');
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
 
 /**
  * error handlind middleware
@@ -15,34 +11,16 @@ const logger = require('../config/logger.config');
  */
 const errorHandler = (err, req, res, next) => {
 
-    logger.info('errorHandler middleware called');
-
-    let STATUS_CODE = 500;
-    let ERR_MSG = err.message;
+    let STATUS_CODE = err.HTTP_STATUS || 500;
 
     if (err instanceof ValidationError) {
         STATUS_CODE = 400;
-        ERR_MSG = err.message;
-    } else if (err instanceof UserAlreadyExistsError) {
-        STATUS_CODE = 400;
-        ERR_MSG = err.message;
-    } else if (err instanceof NotFoundError) {
-        STATUS_CODE = 400;
-        ERR_MSG = err.message;
-    } else if (err instanceof UnAuthorisedUserError) {
-        STATUS_CODE = 403;
-        ERR_MSG = err.message;
-    } else if (err instanceof DBConnectionError) {
-        STATUS_CODE = 500;
-        ERR_MSG = err.message;
+        const apiValidationError = new errorModel.errorResponse(
+            errors.invalid_input.withDetails(err.message));
+        res.status(STATUS_CODE).send(apiValidationError);
+        return;
     }
-
-    const error = {
-        status: STATUS_CODE,
-        message: ERR_MSG
-    };
-
-    res.status(STATUS_CODE).send(error);
+    res.status(STATUS_CODE).send(err);
 };
 
 module.exports = errorHandler;

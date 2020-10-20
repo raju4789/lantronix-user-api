@@ -1,6 +1,9 @@
 const connectToDB = require('../config/db.config');
 const logger = require('../config/logger.config');
 
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
+
 /**
  * gets user by username
  * @param username
@@ -12,8 +15,10 @@ const getDBUser = async (username) => {
     const db = await connectToDB();
 
     if (!db) {
-        logger.error("DB connection failed");
-        throw new Error("DB connection failed");
+        logger.error('DB connection failed');
+        const error = new errorModel.errorResponse(
+            errors.internal_error.withDetails('Our experts are looking into it.'));
+        throw error;
     }
 
     const collection = db.collection('user');
@@ -34,8 +39,10 @@ const addUser = async (user) => {
     const db = await connectToDB();
 
     if (!db) {
-        logger.error("DB connection failed");
-        throw new Error("DB connection failed");
+        logger.error('DB connection failed');
+        const error = new errorModel.errorResponse(
+            errors.internal_error.withDetails('Our experts are looking into it.'));
+        throw error;
     }
 
     const collection = db.collection('user');
@@ -44,3 +51,4 @@ const addUser = async (user) => {
 };
 
 module.exports = { getDBUser, addUser };
+

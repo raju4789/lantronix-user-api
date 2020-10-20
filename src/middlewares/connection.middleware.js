@@ -1,7 +1,8 @@
 const logger = require('../config/logger.config');
 const connectToDB = require('../config/db.config');
 
-const DBConnectionError = require('../errors/DBConnectionError');
+const errors = require('../errors/api.errors');
+const errorModel = require('../errors/errorResponse');
 
 /**
  * authorises user request
@@ -13,14 +14,19 @@ const dbConnectionCheck = (req, _, next) => {
     logger.info('dbConnectionCheck middleware called');
     try {
         const db = connectToDB();
+
         if (!db) {
-            next(new DBConnectionError("DB Connection failed"));
+            const error = new errorModel.errorResponse(
+                errors.internal_error.withDetails('Our experts are looking into it.'));
+            next(error);
         }
 
         next();
     }
     catch (err) {
-        next(new DBConnectionError("DB Connection failed"));
+        const error = new errorModel.errorResponse(
+            errors.internal_error.withDetails('Our experts are looking into it.'));
+        next(error);
     }
 
 };

@@ -4,10 +4,10 @@ POST http://localhost:7777/user/register
 Content-Type: application/json
 
 {
-  "username": "raju4789",
-  "password":"mln1234",
-  "email":"narasimha4789@gmail.com",
-  "firstname": "Raju",
+  "username": "ram4789",
+  "password":"ram1234",
+  "email":"ram@gmail.com",
+  "firstname": "Ram",
   "lastname": "MLN"
 }
 
@@ -17,13 +17,11 @@ POST http://localhost:7777/user/login
 Content-Type: application/json
 
 {
-  "username": "raju4789",
-  "password":"mln1234"
+  "username": "ram4789",
+  "password":"ram1234"
 }
 
 ###
 GET http://localhost:7777/user/status
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhanU0Nzg5IiwicGFzc3dvcmQiOiJtbG4xMjM0IiwiaWF0IjoxNjAyODUzMzM3LCJleHAiOjE2MDI4NTM5Mzd9.MScoHCf1EhuOXpaOFAraTPJu9ZPq_Q1BP-X_t26IffA
-
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhbTQ3ODkiLCJwYXNzd29yZCI6InJhbTEyMzQiLCJpYXQiOjE2MDMxMjM1MTksImV4cCI6MTYwMzEyNDExOX0.7jBcbTLhV5qziDL8ZZKL01e79OcnfRbuPCji2gMrs1c
 

@@ -5,7 +5,7 @@ const authoriseRequest = require('../middlewares/auth.middleware');
 const dbConnectionCheck = require('../middlewares/connection.middleware');
 const authController = require('../controllers/auth.controller');
 
-const { REGISTER, LOGIN } = require('../utils/validations');
+const { REGISTER, LOGIN } = require('../utils/api.validations');
 
 const router = express.Router();
 

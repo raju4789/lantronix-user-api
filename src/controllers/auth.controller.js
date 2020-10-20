@@ -20,7 +20,9 @@ const registerUser = async (req, res, next) => {
         res.status(200)
             .send({ message: 'A verification mail has been sent to your registered mail.' });
     } catch (err) {
-        logger.error(`Failed to create user with username: ${req.body.username} because of Error: ${err.message}`);
+        logger.error(
+            `Failed to create user with username: ${req.body.username} because of Error: ${err.message}`
+        );
         next(err);
     }
 };
